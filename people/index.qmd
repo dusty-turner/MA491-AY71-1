@@ -1,0 +1,16 @@
+---
+title: "People"
+listing:
+  contents:
+    - "*.qmd"
+    - "extra-pages.yml"
+  type: grid
+  grid-columns: 3
+  fields: [title, subtitle, description]
+  sort: "title"
+  sort-ui: false
+  filter-ui: false
+toc: false
+---
+
+Everyone teaching MA491 this term. Click a name for that person's page.

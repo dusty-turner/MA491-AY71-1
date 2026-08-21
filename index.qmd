@@ -1,0 +1,29 @@
+---
+title: "MA491"
+subtitle: "AY27-1"
+toc: false
+---
+
+Welcome to the MA491 course site. Everything you need for the semester lives
+here: the syllabus, the day-by-day schedule, and the lesson pages with worked
+examples and R code.
+
+::: {.callout-note}
+## Start here
+New to the course? Read the [syllabus](syllabus.qmd), then check the
+[schedule](schedule.qmd) for what's due next.
+:::
+
+## Quick links
+
+| | |
+|---|---|
+| [Syllabus](syllabus.qmd) | Grading, policies, and course objectives |
+| [Schedule](schedule.qmd) | Lesson-by-lesson plan and due dates |
+| [Lessons](lessons/index.qmd) | Notes, examples, and code for each lesson |
+| [People](people/index.qmd) | Who we are and when to find us |
+
+## Course staff
+
+Six of us are teaching MA491 this term. See the [People](people/index.qmd)
+page for office hours and contact info.

@@ -1,0 +1,23 @@
+---
+title: "Your Name"
+subtitle: "Instructor"
+description: "One line about you, shown on the People page."
+---
+
+::: {.lesson-meta}
+**Office:** TBD &nbsp;&middot;&nbsp; **Email:** you@westpoint.edu
+:::
+
+## About
+
+Write a short bio here.
+
+## Office hours
+
+| Day | Time |
+|---|---|
+| TBD | TBD |
+
+## What I'm teaching
+
+- Section TBD
