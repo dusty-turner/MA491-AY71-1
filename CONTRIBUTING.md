@@ -29,6 +29,13 @@ git push
 Pushing to `main` triggers the **Publish site** action. Two to three minutes
 later the change is live. Watch it under the repo's *Actions* tab.
 
+## Claiming your own page
+
+Your page is `people/your-name.qmd`. Edit it directly &mdash; nobody else
+touches that file, so you can never hit a conflict there. If yours is missing,
+copy `people/_template.qmd` to `people/first-last.qmd`; it shows up on the
+People page automatically, no nav editing required.
+
 ## Adding a lesson
 
 1. Copy `lessons/_template.qmd` to `lessons/NN-short-name.qmd`.
@@ -44,8 +51,8 @@ The template itself starts with `_`, so Quarto never publishes it.
 
 - **Pull before you edit.** Most conflicts here come from stale copies, not
   from two people editing the same line.
-- **Own your lesson files.** Editing only `lessons/07-*.qmd` means you can
-  never conflict with the person on lesson 8.
+- **Own your files.** Editing only `lessons/07-*.qmd` and your own
+  `people/*.qmd` means you can never conflict with anyone else.
 - **Shared files are `_quarto.yml`, `schedule.qmd`, `styles.scss`.** These are
   the ones that conflict. Keep edits to them small and push them promptly
   rather than sitting on them for a week.

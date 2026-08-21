@@ -4,7 +4,9 @@ project:
   render:
     - "*.qmd"
     - "lessons/*.qmd"
-    - "!lessons/_template.qmd"   # the template is a starting point, not a page
+    - "people/*.qmd"
+    - "!lessons/_template.qmd"   # templates are starting points, not pages
+    - "!people/_template.qmd"
 
 # Cache R chunk output. Render locally, commit the _freeze/ folder, and CI
 # reuses the results instead of re-running your code. See CONTRIBUTING.md.
@@ -30,6 +32,8 @@ website:
         href: syllabus.qmd
       - text: "Schedule"
         href: schedule.qmd
+      - text: "People"
+        href: people/index.qmd
       - text: "Lessons"
         href: lessons/index.qmd
     right:

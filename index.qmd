@@ -21,13 +21,9 @@ New to the course? Read the [syllabus](syllabus.qmd), then check the
 | [Syllabus](syllabus.qmd) | Grading, policies, and course objectives |
 | [Schedule](schedule.qmd) | Lesson-by-lesson plan and due dates |
 | [Lessons](lessons/index.qmd) | Notes, examples, and code for each lesson |
+| [People](people/index.qmd) | Who we are and when to find us |
 
 ## Course staff
 
-Replace this table with the real roster.
-
-| Name | Role | Office | Email |
-|---|---|---|---|
-| Dusty Turner | Course Director | TBD | dusty.turner@westpoint.edu |
-| TBD | Instructor | TBD | TBD |
-| TBD | Instructor | TBD | TBD |
+Six of us are teaching MA491 this term. See the [People](people/index.qmd)
+page for office hours and contact info.
