@@ -5,26 +5,21 @@ description: "Statistics, machine learning, and a growing interest in quantitati
 ---
 
 ::: {.lesson-meta}
-**Office:** TBD &nbsp;&middot;&nbsp; **Email:** [joseph.moran@westpoint.edu](mailto:joseph.moran@westpoint.edu)
+**Email:** [joseph.moran@westpoint.edu](mailto:joseph.moran@westpoint.edu)
 :::
 
-![](joseph-moran-assets/math-finance-banner.png)
+![](joseph-moran-assets/illustrated-portrait.png)
 
 ## About
 
-I'm drawn to the parts of math that let you say something rigorous about
-uncertainty — estimation theory, the bias-variance tradeoff, and building
-models that generalize rather than just fit. My coursework and projects span
-statistical inference, generalized additive and logistic regression models,
-and machine learning methods including clustering, SVMs, and neural networks.
+Originally from Long Island, New York, I'm drawn to the parts of math that
+let you say something rigorous about uncertainty — estimation theory, the
+bias-variance tradeoff, and building models that generalize rather than just
+fit. My coursework and projects span statistical inference, generalized
+additive and logistic regression models, and machine learning methods
+including clustering, SVMs, and neural networks.
 
 Lately I've been pointing that toolkit at two places I genuinely enjoy:
 **quantitative finance**, where probability and estimation meet real
 decision-making under risk, and **sports analytics** — I've built sabermetrics
 projects applying statistical models to baseball performance data.
-
-## Office hours
-
-| Day | Time |
-|---|---|
-| TBD | TBD |
