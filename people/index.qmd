@@ -1,7 +1,9 @@
 ---
 title: "People"
 listing:
-  contents: "*.qmd"
+  contents:
+    - "*.qmd"
+    - "extra-pages.yml"
   type: grid
   grid-columns: 3
   fields: [title, subtitle, description]

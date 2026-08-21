@@ -1,0 +1,6 @@
+# Hand-built pages that live in the site as-is instead of as .qmd.
+# Add an entry here when someone brings their own fully designed HTML page.
+- title: "Austin Semmel"
+  subtitle: "Instructor"
+  description: "Custom page — instruction, research, and writing."
+  path: austin-semmel/index.html

@@ -74,3 +74,15 @@ Check the *Actions* tab and open the red run. Nearly always it is one of:
 - A link to a page that does not exist.
 
 Reproduce it locally with `quarto render` — the same error shows up there.
+
+## Bringing your own hand-built HTML page
+
+If you'd rather design your page yourself than use the Quarto template
+(Austin did), you can:
+
+1. Put it at `people/your-name/index.html`, self-contained.
+2. Add your folder to `resources:` in `_quarto.yml` so it gets copied through.
+3. Add an entry to `people/extra-pages.yml` so you appear on the People page.
+
+Quarto copies the file byte-for-byte and never restyles it. Link back to the
+course home with `href="../../"`.

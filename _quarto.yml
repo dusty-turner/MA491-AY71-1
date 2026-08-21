@@ -8,6 +8,10 @@ project:
     - "!lessons/_template.qmd"   # templates are starting points, not pages
     - "!people/_template.qmd"
 
+  # Hand-built HTML pages, copied through untouched. See people/extra-pages.yml.
+  resources:
+    - "people/austin-semmel/**"
+
 # Cache R chunk output. Render locally, commit the _freeze/ folder, and CI
 # reuses the results instead of re-running your code. See CONTRIBUTING.md.
 execute:
