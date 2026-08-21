@@ -1,7 +1,7 @@
 ---
 title: "Mike Powell"
 subtitle: "Instructor"
-description: "Page coming soon."
+description: "Contributor, MA491 AY71-1."
 ---
 
 ::: {.lesson-meta}
@@ -10,10 +10,14 @@ description: "Page coming soon."
 
 ## About
 
-Page coming soon.
+_TODO: add a short bio &mdash; background, year/branch, what you're working on for this course._
 
 ## Office hours
 
 | Day | Time |
 |---|---|
 | TBD | TBD |
+
+## Links
+
+- [GitHub](https://github.com/m-powell)

@@ -1,7 +1,7 @@
 ---
 title: "Noah Longfield"
 subtitle: "Instructor"
-description: "Page coming soon."
+description: "Raised overseas, happiest outdoors."
 ---
 
 ::: {.lesson-meta}
@@ -10,7 +10,28 @@ description: "Page coming soon."
 
 ## About
 
-Page coming soon.
+I spent seven years growing up abroad, living in both France and Singapore,
+which shaped a pretty strong pull toward travel and being outside. When I'm
+not working, I'm usually trying to be in the mountains, the woods, or the
+water &mdash; hunting, skiing, wakesurfing, scuba diving, or just being in
+nature.
+
+## Family
+
+I have two parents and one younger brother, who's currently a student at
+UT Austin.
+
+## Photos
+
+::: {layout-ncol="2"}
+![Hunting](noah-longfield/images/thumbnail_3ded40e6-e779-4697-a761-8a97e7730d14.jpg)
+
+![Scuba diving](noah-longfield/images/thumbnail_GOPR3731.jpg)
+
+![Skiing](noah-longfield/images/IMG_2409.jpg)
+
+![With my brother, growing up](noah-longfield/images/thumbnail_IMG_1554.jpg)
+:::
 
 ## Office hours
 
