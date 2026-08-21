@@ -1,4 +1,14 @@
+# R
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# Quarto build output
+/_site/
+/.quarto/
+
+# NOTE: do NOT ignore /_freeze/ -- it is committed on purpose so the site
+# builds on GitHub without re-running everyone's R code. See CONTRIBUTING.md.
+
+**/*.quarto_ipynb

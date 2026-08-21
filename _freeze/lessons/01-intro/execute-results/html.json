@@ -1,0 +1,19 @@
+{
+  "hash": "d384924b7320fd48d9630847e1aa2ca1",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Lesson 1: A One-Sample t-Test\"\ndescription: \"Testing a claim about a population mean, by hand and in R.\"\ndate: 2026-08-21\nlesson: 1\nauthor: \"Dusty Turner\"\n---\n\n::: {.lesson-meta}\n**Reading:** Ch. 1 &nbsp;&middot;&nbsp; **Due:** nothing\n:::\n\n## Objectives\n\n- State null and alternative hypotheses for a claim about a mean.\n- Compute a $t$ statistic and its $p$-value.\n\n## Notes\n\nWe have a sample of $n = 67$ observations with $\\bar{x} = 4.5$ and $s = 1.6$,\nand we want to test $H_0: \\mu = 3.5$ against $H_a: \\mu \\neq 3.5$.\n\nThe test statistic is\n\n$$t = \\frac{\\bar{x} - \\mu_0}{s / \\sqrt{n}}$$\n\n## Worked example\n\n\n::: {.cell}\n\n```{.r .cell-code}\nxbar <- 4.5\ns    <- 1.6\nn    <- 67\nnull <- 3.5\n\nt <- (xbar - null) / (s / sqrt(n))\nt\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 5.115845\n```\n\n\n:::\n\n```{.r .cell-code}\n# two-sided p-value\n2 * (1 - pt(abs(t), df = n - 1))\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2.898957e-06\n```\n\n\n:::\n:::\n\n\n::: {.callout-tip}\n## Try it yourself\nRecompute the $p$-value for a one-sided alternative, $H_a: \\mu > 3.5$. How does\nit compare?\n:::\n\n## Homework\n\n- Problems 1.1 through 1.10.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

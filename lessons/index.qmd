@@ -1,0 +1,14 @@
+---
+title: "Lessons"
+listing:
+  contents: "*.qmd"
+  type: default
+  sort: "lesson"
+  fields: [title, description, date]
+  sort-ui: false
+  filter-ui: true
+toc: false
+---
+
+Each lesson page has the notes, worked examples, and runnable R code for that
+class meeting.

@@ -1,0 +1,40 @@
+---
+title: "Syllabus"
+---
+
+## Course description
+
+One or two paragraphs describing the course. Replace this text.
+
+## Objectives
+
+By the end of the course, students will be able to:
+
+1. Objective one.
+2. Objective two.
+3. Objective three.
+
+## Materials
+
+- **Textbook:** TBD
+- **Software:** [R](https://cran.r-project.org) and [RStudio](https://posit.co/download/rstudio-desktop/)
+
+## Grading
+
+| Component | Weight |
+|---|---:|
+| Homework | 20% |
+| Projects | 25% |
+| WPRs | 35% |
+| Final | 20% |
+| **Total** | **100%** |
+
+## Policies
+
+### Attendance
+
+Replace with the course attendance policy.
+
+### Documentation
+
+Replace with the documentation / academic integrity policy.

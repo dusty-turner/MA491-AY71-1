@@ -1,0 +1,55 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "lessons/*.qmd"
+    - "!lessons/_template.qmd"   # the template is a starting point, not a page
+
+# Cache R chunk output. Render locally, commit the _freeze/ folder, and CI
+# reuses the results instead of re-running your code. See CONTRIBUTING.md.
+execute:
+  freeze: auto
+
+website:
+  title: "MA491"
+  description: "Course site for MA491, AY27-1"
+  site-url: "https://dusty-turner.github.io/MA491-AY71-1/"
+  repo-url: "https://github.com/dusty-turner/MA491-AY71-1"
+  repo-actions: [edit, issue]
+  page-navigation: true
+  back-to-top-navigation: true
+
+  navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Syllabus"
+        href: syllabus.qmd
+      - text: "Schedule"
+        href: schedule.qmd
+      - text: "Lessons"
+        href: lessons/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/dusty-turner/MA491-AY71-1
+        aria-label: "Course GitHub repository"
+
+  page-footer:
+    left: "MA491 &middot; AY27-1"
+    center: "Department of Mathematical Sciences, USMA"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    df-print: paged
+    link-external-newwindow: true
