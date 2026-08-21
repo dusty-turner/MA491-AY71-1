@@ -13,6 +13,7 @@ project:
     - "people/austin-semmel/**"
     - "people/doc-joe-d/**"
     - "people/doc-joe-d-assets/**"
+    - "people/joseph-moran/**"
 
 # Cache R chunk output. Render locally, commit the _freeze/ folder, and CI
 # reuses the results instead of re-running your code. See CONTRIBUTING.md.

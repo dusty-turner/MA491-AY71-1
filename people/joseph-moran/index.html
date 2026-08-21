@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Moran &mdash; MA491 AY71-1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lab:       #0B0D10;   /* near-black lab background */
+  --lab-2:     #131720;
+  --amber:     #FFB020;   /* market ticker amber */
+  --phosphor:  #39FF88;   /* terminal green */
+  --spark:     #9B5CFF;   /* mad-scientist violet spark */
+  --paper:     #ECEFF3;   /* off-white text */
+  --paper-dim: #8B93A1;
+  --grid:      rgba(155, 92, 255, 0.10);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--lab);
+  color: var(--paper);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 15.2px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(circle at 15% 8%, rgba(57, 255, 136, 0.06), transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(255, 176, 32, 0.06), transparent 45%);
+  background-size: 42px 42px, 42px 42px, 100% 100%, 100% 100%;
+}
+code, .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+a { color: var(--phosphor); }
+
+/* ---- Ticker tape ---- */
+.ticker-bar {
+  height: 26px;
+  background: #060708;
+  border-bottom: 1px solid rgba(255, 176, 32, 0.2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: inline-flex;
+  gap: 28px;
+  padding-left: 20px;
+  animation: scroll-left 22s linear infinite;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.4px;
+}
+.ticker-track span { color: var(--paper-dim); flex: 0 0 auto; }
+.ticker-track span.up { color: var(--phosphor); }
+.ticker-track span.down { color: var(--amber); }
+@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ---- Nav ---- */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(155, 92, 255, 0.18);
+  background: rgba(6, 7, 8, 0.55);
+}
+.course {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--amber);
+  font-size: 0.9rem;
+}
+.spark-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--spark);
+  margin-right: 8px;
+  vertical-align: 1px;
+  animation: flicker 2.6s ease-in-out infinite;
+}
+@keyframes flicker { 0%, 88% { opacity: 1; box-shadow: 0 0 8px var(--spark); } 92% { opacity: 0.2; box-shadow: none; } 96% { opacity: 1; box-shadow: 0 0 8px var(--spark); } }
+.nav-spacer { flex: 1 1 auto; }
+.nav-link {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--paper-dim);
+  font-size: 0.78rem;
+  text-decoration: none;
+  letter-spacing: 0.4px;
+}
+.nav-link:hover { color: var(--phosphor); }
+
+/* ---- Layout ---- */
+.wrap { max-width: 820px; margin: 0 auto; padding: 2.25rem 1.25rem 3rem; }
+
+/* ---- Shell prompts ---- */
+.prompt {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.86rem;
+  color: var(--paper-dim);
+  margin: 2.1rem 0 0.85rem;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.prompt:first-of-type { margin-top: 1.5rem; }
+.prompt .u { color: var(--phosphor); }
+.prompt .h { color: var(--spark); }
+.prompt .p { color: var(--amber); }
+.prompt .c { color: var(--paper); }
+.cursor {
+  display: inline-block;
+  width: 8px; height: 15px;
+  background: var(--phosphor);
+  vertical-align: -2px;
+  animation: caret 1.1s step-end infinite;
+}
+@keyframes caret { 50% { opacity: 0; } }
+
+/* ---- Hero ---- */
+.hero { display: flex; align-items: flex-start; gap: 2.5rem; flex-wrap: wrap; }
+.hero-portrait { position: relative; flex-shrink: 0; }
+.hero-portrait img {
+  display: block;
+  width: 280px;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid rgba(155, 92, 255, 0.5);
+  box-shadow: 0 0 0 4px rgba(57, 255, 136, 0.06), 0 0 34px rgba(155, 92, 255, 0.18), 0 8px 26px rgba(0, 0, 0, 0.5);
+}
+.hero-body { flex: 1 1 300px; min-width: 250px; padding-top: 0.5rem; }
+.hero-body h1 { font-size: 2.15rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.45rem; }
+.hero-body .rank {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 0.74rem;
+  margin: 0 0 0.4rem;
+}
+.hero-body .role { color: var(--paper-dim); margin: 0; font-size: 0.95rem; }
+.tagline {
+  display: inline-block;
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(57, 255, 136, 0.35);
+  border-radius: 3px;
+  background: rgba(57, 255, 136, 0.06);
+  color: var(--phosphor);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.3px;
+}
+
+/* ---- Text blocks ---- */
+.out { margin: 0; }
+.out p { margin: 0 0 0.9rem; }
+.out p:last-child { margin-bottom: 0; }
+
+/* ---- Log lines ---- */
+.log { font-family: "JetBrains Mono", monospace; font-size: 0.82rem; }
+.log .line { padding: 0.35rem 0; border-bottom: 1px dashed rgba(155, 92, 255, 0.12); display: flex; gap: 0.7rem; }
+.log .line:last-child { border-bottom: none; }
+.log .ts { color: var(--paper-dim); flex: 0 0 auto; }
+.log .lvl { flex: 0 0 auto; font-weight: 700; }
+.log .lvl.info { color: var(--phosphor); }
+.log .lvl.warn { color: var(--amber); }
+.log .lvl.crit { color: var(--spark); }
+.log .msg { color: var(--paper); }
+
+/* ---- Photo gallery ---- */
+.gallery { display: flex; flex-wrap: wrap; gap: 1rem; }
+.gallery figure { margin: 0; flex: 1 1 220px; max-width: 320px; }
+.gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 176, 32, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+.gallery figcaption {
+  margin-top: 0.4rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--paper-dim);
+}
+
+/* ---- Spec table ---- */
+table.spec {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+}
+table.spec td { padding: 0.5rem 0; border-bottom: 1px solid rgba(155, 92, 255, 0.14); vertical-align: top; }
+table.spec tr:last-child td { border-bottom: none; }
+table.spec td.k { color: var(--phosphor); width: 11rem; white-space: nowrap; padding-right: 1rem; }
+table.spec td.v { color: var(--paper); }
+table.spec td.v span { color: var(--paper-dim); }
+
+/* ---- Links ---- */
+.links { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  display: inline-block;
+  padding: 0.45rem 0.95rem;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 176, 32, 0.35);
+  color: var(--amber);
+  background: rgba(255, 176, 32, 0.06);
+  transition: all 0.18s ease;
+}
+.btn:hover { border-color: var(--amber); background: rgba(255, 176, 32, 0.14); }
+.btn.spark {
+  background: var(--spark);
+  border-color: var(--spark);
+  color: #F5EFFF;
+}
+.btn.spark:hover { background: #7E3EE0; border-color: #7E3EE0; }
+
+footer {
+  margin-top: 2.75rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(155, 92, 255, 0.18);
+  color: var(--paper-dim);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .hero { justify-content: center; }
+  .hero-portrait img { width: min(280px, 82vw); }
+  .prompt { font-size: 0.78rem; }
+  .log .line { flex-wrap: wrap; }
+  table.spec td.k { width: auto; display: block; padding-bottom: 0; border: none; }
+  table.spec td.v { display: block; padding-top: 0.15rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span class="up">MA491 ▲ steady</span>
+    <span>N(0,1) &middot; est.</span>
+    <span class="down">RISK ▼ managed</span>
+    <span>LI &rarr; WEST POINT</span>
+    <span class="up">SABR ▲ tracking</span>
+    <span>COOK &middot; EAT &middot; REPEAT</span>
+    <span class="up">MA491 ▲ steady</span>
+    <span>N(0,1) &middot; est.</span>
+    <span class="down">RISK ▼ managed</span>
+    <span>LI &rarr; WEST POINT</span>
+    <span class="up">SABR ▲ tracking</span>
+    <span>COOK &middot; EAT &middot; REPEAT</span>
+  </div>
+</div>
+
+<nav class="navbar">
+  <span class="course"><span class="spark-dot"></span>MA491 &middot; AY71-1</span>
+  <span class="nav-spacer"></span>
+  <a class="nav-link" href="../">cd ../people</a>
+</nav>
+
+<div class="wrap">
+
+  <p class="prompt"><span class="u">jmoran</span>@<span class="h">rogue-quant-lab</span>:<span class="p">~</span>$ <span class="c">whoami</span></p>
+  <div class="hero">
+    <div class="hero-portrait">
+      <img src="hero.png" alt="Illustrated portrait of Joseph Moran as a rogue quant mad scientist, surrounded by glowing bell curves, candlestick charts, and lightning">
+    </div>
+    <div class="hero-body">
+      <p class="rank">Cadet, Class of 2027</p>
+      <h1>Joseph Moran</h1>
+      <p class="role">Department of Mathematical Sciences</p>
+      <p class="role">United States Military Academy, West Point</p>
+      <span class="tagline">status: overclocked on statistics &amp; quantitative finance</span>
+    </div>
+  </div>
+
+  <p class="prompt"><span class="u">jmoran</span>@<span class="h">rogue-quant-lab</span>:<span class="p">~</span>$ <span class="c">cat lab_notebook.txt</span></p>
+  <div class="out">
+    <p>Originally from Long Island, New York &mdash; that's home turf. What
+    pulled me into math wasn't the formulas themselves, it was the idea that
+    you can say something rigorous about uncertainty: estimation theory,
+    the bias&ndash;variance tradeoff, and models that actually generalize
+    instead of just fitting the data in front of you.</p>
+    <p>My coursework and projects run through statistical inference,
+    generalized additive and logistic regression models, and machine
+    learning &mdash; clustering, SVMs, and neural networks. Most recently
+    I've been pointing that toolkit at two things I genuinely enjoy:
+    <strong>quantitative finance</strong>, where probability and estimation
+    meet real decisions under risk, and <strong>sports analytics</strong>,
+    where I've built sabermetrics projects modeling baseball performance.</p>
+  </div>
+
+  <p class="prompt"><span class="u">jmoran</span>@<span class="h">rogue-quant-lab</span>:<span class="p">~</span>$ <span class="c">tail -f fun_facts.log</span></p>
+  <div class="log">
+    <div class="line"><span class="ts">[06:00:01]</span><span class="lvl info">INFO</span><span class="msg">Former high school tennis player &mdash; still can't resist a rally.</span></div>
+    <div class="line"><span class="ts">[06:00:04]</span><span class="lvl info">INFO</span><span class="msg">Runs for fun. Yes, actually for fun.</span></div>
+    <div class="line"><span class="ts">[06:00:07]</span><span class="lvl warn">WARN</span><span class="msg">Favorite hobby flagged as high-risk: cooking AND eating. Repeat offender.</span></div>
+    <div class="line"><span class="ts">[06:00:10]</span><span class="lvl info">INFO</span><span class="msg">Applies statistical models to baseball because sabermetrics beats small talk.</span></div>
+    <div class="line"><span class="ts">[06:00:13]</span><span class="lvl crit">CRIT</span><span class="msg">Origin traced to Long Island, New York.</span></div>
+  </div>
+
+  <p class="prompt"><span class="u">jmoran</span>@<span class="h">rogue-quant-lab</span>:<span class="p">~</span>$ <span class="c">ls photos/</span></p>
+  <div class="gallery">
+    <figure>
+      <img src="photo-longisland.jpg" alt="Joseph Moran on a beach near Fort Tilden, dressed in Army gear">
+      <figcaption>home turf &mdash; Long Island, NY</figcaption>
+    </figure>
+  </div>
+
+  <p class="prompt"><span class="u">jmoran</span>@<span class="h">rogue-quant-lab</span>:<span class="p">~</span>$ <span class="c">cat contact.yml</span></p>
+  <table class="spec">
+    <tr><td class="k">email</td><td class="v"><a href="mailto:joseph.moran@westpoint.edu">joseph.moran@westpoint.edu</a></td></tr>
+    <tr><td class="k">hometown</td><td class="v">Long Island, New York</td></tr>
+    <tr><td class="k">interests</td><td class="v">Statistical inference, machine learning, quantitative finance <span>&mdash; and sabermetrics</span></td></tr>
+    <tr><td class="k">off duty</td><td class="v">Tennis, running, cooking (and eating) <span>&mdash; not necessarily in that order</span></td></tr>
+  </table>
+
+  <p class="prompt"><span class="u">jmoran</span>@<span class="h">rogue-quant-lab</span>:<span class="p">~</span>$ <span class="cursor"></span></p>
+
+  <footer>
+    The views expressed here are those of the author and do not reflect the official policy or position of the United States Army, Department of Defense, the United States Military Academy at West Point, or the U.S. Government.
+  </footer>
+
+</div>
+
+</body>
+</html>

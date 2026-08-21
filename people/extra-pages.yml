@@ -9,3 +9,8 @@
   subtitle: "Instructor"
   description: "Mathematics, teaching, and a little mathemagic."
   path: doc-joe-d/index.html
+
+- title: "Joseph Moran"
+  subtitle: "Cadet, Class of 2027"
+  description: "Custom page — rogue quant, mad scientist, Long Island native."
+  path: joseph-moran/index.html
