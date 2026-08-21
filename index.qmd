@@ -1,29 +1,61 @@
 ---
-title: "MA491"
-subtitle: "AY27-1"
+pagetitle: "MA491 · AY27-1"
 toc: false
+page-layout: full
 ---
 
-Welcome to the MA491 course site. Everything you need for the semester lives
-here: the syllabus, the day-by-day schedule, and the lesson pages with worked
-examples and R code.
+::: {.hero}
+::: {.eyebrow}
+Department of Mathematical Sciences · United States Military Academy
+:::
+# MA491
 
-::: {.callout-note}
-## Start here
-New to the course? Read the [syllabus](syllabus.qmd), then check the
-[schedule](schedule.qmd) for what's due next.
+::: {.lede}
+Applied statistics for cadets who will have to defend a number in front of
+someone who outranks them. One semester, six instructors, and a lot of R.
+:::
 :::
 
-## Quick links
+::: {.quick-grid}
+::: {.quick-card}
+### [Syllabus](syllabus.qmd)
+How the course is graded and what it expects of you.
+:::
 
-| | |
-|---|---|
-| [Syllabus](syllabus.qmd) | Grading, policies, and course objectives |
-| [Schedule](schedule.qmd) | Lesson-by-lesson plan and due dates |
-| [Lessons](lessons/index.qmd) | Notes, examples, and code for each lesson |
-| [People](people/index.qmd) | Who we are and when to find us |
+::: {.quick-card}
+### [Schedule](schedule.qmd)
+Lesson-by-lesson plan, readings, and what's due next.
+:::
 
-## Course staff
+::: {.quick-card}
+### [Lessons](lessons/index.qmd)
+Notes, worked examples, and runnable R for every class meeting.
+:::
 
-Six of us are teaching MA491 this term. See the [People](people/index.qmd)
-page for office hours and contact info.
+::: {.quick-card}
+### [People](people/index.qmd)
+The six of us teaching it, and when to find us.
+:::
+:::
+
+## Start here
+
+If you're new to the course, read the [syllabus](syllabus.qmd) first, then
+check the [schedule](schedule.qmd) for the next thing due. Every lesson page
+carries its own code, so you can follow along in R while you read rather than
+after.
+
+## What you'll need
+
+You'll want [R](https://cran.r-project.org) and
+[RStudio](https://posit.co/download/rstudio-desktop/) installed before the
+first lesson. Both are free, and RStudio bundles everything else this site
+relies on. Every code block on this site can be copied straight into the
+console with the button in its top-right corner.
+
+## How this site works
+
+These pages are built from the same repository the course staff edits, so a
+correction pushed in the morning is live by the afternoon. If you spot an
+error, the **Edit this page** link in the footer of any page will take you
+straight to the source.

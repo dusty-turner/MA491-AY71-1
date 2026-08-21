@@ -2,22 +2,33 @@
 title: "Syllabus"
 ---
 
-## Course description
+::: {.callout-note}
+## Course staff
+The weights and policies below are the working draft for AY27-1. Anything the
+staff has not finalized is called out explicitly rather than left as a blank
+row.
+:::
 
-One or two paragraphs describing the course. Replace this text.
+## What this course is
 
-## Objectives
+MA491 is an applied statistics course. The emphasis is on choosing a defensible
+method, carrying it out correctly in R, and explaining the result to someone who
+will act on it. Derivations appear where they change how you use a method, not
+for their own sake.
 
-By the end of the course, students will be able to:
+## What you should be able to do by the end
 
-1. Objective one.
-2. Objective two.
-3. Objective three.
+- Frame a practical question as a statistical one, and say what the data would
+  have to look like for your answer to be wrong.
+- Fit, check, and interpret the standard models covered in the course.
+- Carry an analysis end to end in R, from raw data to a written conclusion.
+- Read a published analysis critically enough to find its weak point.
 
 ## Materials
 
-- **Textbook:** TBD
-- **Software:** [R](https://cran.r-project.org) and [RStudio](https://posit.co/download/rstudio-desktop/)
+- **Software:** [R](https://cran.r-project.org) and
+  [RStudio](https://posit.co/download/rstudio-desktop/). Both free.
+- **Textbook:** *to be set by the course director.*
 
 ## Grading
 
@@ -29,12 +40,15 @@ By the end of the course, students will be able to:
 | Final | 20% |
 | **Total** | **100%** |
 
-## Policies
+## Getting help
 
-### Attendance
+Every instructor holds office hours; see the [People](people/index.qmd) page.
+Additional instruction is expected, not remedial — come early rather than the
+night before something is due.
 
-Replace with the course attendance policy.
+## Academic integrity
 
-### Documentation
-
-Replace with the documentation / academic integrity policy.
+Work you submit must be yours. Collaboration on homework is encouraged as long
+as you write your own solution and document who you worked with. Graded events
+are individual unless stated otherwise. *Full documentation policy to be added
+by the course director.*

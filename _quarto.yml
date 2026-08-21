@@ -52,9 +52,16 @@ website:
 
 format:
   html:
+    # darkly gives sane dark defaults for tables, code, and form controls;
+    # styles.scss then applies the course palette on top.
     theme:
-      - cosmo
+      - darkly
       - styles.scss
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     toc: true
     toc-depth: 3
     code-copy: true
