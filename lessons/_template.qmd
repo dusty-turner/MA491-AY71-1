@@ -1,0 +1,43 @@
+---
+title: "Lesson NN: Title Goes Here"
+description: "One sentence a student sees on the Lessons page."
+date: 2026-08-21
+lesson: 99          # controls ordering on the Lessons page
+author: "Your Name"
+---
+
+::: {.lesson-meta}
+**Reading:** Ch. X &nbsp;&middot;&nbsp; **Due:** nothing &nbsp;&middot;&nbsp; **Slides:** [link](#)
+:::
+
+## Objectives
+
+By the end of this lesson you should be able to:
+
+- Objective one.
+- Objective two.
+
+## Notes
+
+Write the lesson here.
+
+## Worked example
+
+```{r}
+#| label: example
+#| message: false
+
+# R code here. It runs when the page is rendered.
+x <- rnorm(30, mean = 10, sd = 2)
+summary(x)
+```
+
+::: {.callout-tip}
+## Try it yourself
+Pose a question for students to work here.
+:::
+
+## Homework
+
+- Problem 1
+- Problem 2

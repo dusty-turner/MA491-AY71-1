@@ -1,0 +1,11 @@
+---
+title: "Schedule"
+---
+
+Subject to change. Check back before each lesson.
+
+| Lesson | Date | Topic | Reading | Due |
+|---:|---|---|---|---|
+| 1 | TBD | [Introduction](lessons/01-intro.qmd) | Ch. 1 | — |
+| 2 | TBD | TBD | TBD | HW 1 |
+| 3 | TBD | TBD | TBD | — |
