@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Dorta &mdash; MA491 AY71-1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --board: #121212;
+  --board-2: #1d1d1b;
+  --gold: #d4af57;
+  --gold-bright: #f0c96a;
+  --cream: #f5f0df;
+  --dim: #aaa68f;
+  --chalk: rgba(245, 240, 223, 0.055);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--board);
+  color: var(--cream);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15.2px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(var(--chalk) 1px, transparent 1px),
+    linear-gradient(90deg, var(--chalk) 1px, transparent 1px),
+    radial-gradient(circle at 18% 12%, rgba(212, 175, 87, 0.09), transparent 38%),
+    radial-gradient(circle at 82% 76%, rgba(72, 114, 145, 0.08), transparent 42%);
+  background-size: 46px 46px, 46px 46px, 100% 100%, 100% 100%;
+}
+code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+a { color: var(--gold-bright); }
+.math-strip {
+  height: 26px;
+  background: #090909;
+  border-bottom: 1px solid rgba(212, 175, 87, 0.28);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 16px;
+  overflow: hidden;
+  color: var(--gold);
+  font: 0.68rem "JetBrains Mono", monospace;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.math-strip span:nth-child(even) { color: #7695aa; }
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(212, 175, 87, 0.18);
+  background: rgba(8, 8, 8, 0.64);
+}
+.course { font: 700 0.9rem "JetBrains Mono", monospace; letter-spacing: 1px; color: var(--gold); }
+.spark { display: inline-block; margin-right: 8px; animation: glow 2.4s ease-in-out infinite; }
+@keyframes glow { 50% { text-shadow: 0 0 10px var(--gold-bright); } }
+.nav-spacer { flex: 1 1 auto; }
+.nav-link { font: 0.78rem "JetBrains Mono", monospace; color: var(--dim); text-decoration: none; letter-spacing: 0.4px; }
+.nav-link:hover { color: var(--gold-bright); }
+.wrap { max-width: 820px; margin: 0 auto; padding: 2.25rem 1.25rem 3rem; }
+.prompt { font: 0.86rem "JetBrains Mono", monospace; color: var(--dim); margin: 2.1rem 0 0.85rem; white-space: nowrap; overflow-x: auto; }
+.prompt:first-of-type { margin-top: 1.5rem; }
+.prompt .u { color: var(--gold-bright); }
+.prompt .h { color: #85a7bd; }
+.prompt .p { color: var(--gold); }
+.prompt .c { color: var(--cream); }
+.cursor { display: inline-block; width: 8px; height: 15px; background: var(--gold); vertical-align: -2px; animation: caret 1.1s step-end infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.hero { display: flex; align-items: flex-start; gap: 2.5rem; flex-wrap: wrap; }
+.hero-portrait { position: relative; flex-shrink: 0; }
+.hero-portrait img {
+  display: block;
+  width: 246px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid var(--gold);
+  box-shadow: 0 0 0 4px rgba(212, 175, 87, 0.08), 0 8px 26px rgba(0, 0, 0, 0.55);
+}
+.hero-portrait::after {
+  content: "∑";
+  position: absolute;
+  right: -18px;
+  bottom: -24px;
+  color: var(--gold-bright);
+  font: 700 3.4rem Georgia, serif;
+  filter: drop-shadow(0 0 9px rgba(212, 175, 87, 0.55));
+  transform: rotate(-8deg);
+}
+.hero-body { flex: 1 1 300px; min-width: 250px; padding-top: 0.5rem; }
+.hero-body h1 { font-size: 2.15rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.45rem; }
+.hero-body .rank { font: 0.74rem "JetBrains Mono", monospace; color: var(--gold); text-transform: uppercase; letter-spacing: 0.09em; margin: 0 0 0.4rem; }
+.hero-body .role { color: var(--dim); margin: 0; font-size: 0.95rem; }
+.out p { margin: 0; }
+table.spec { width: 100%; border-collapse: collapse; font: 0.85rem "JetBrains Mono", monospace; }
+table.spec td { padding: 0.5rem 0; border-bottom: 1px solid rgba(212, 175, 87, 0.14); vertical-align: top; }
+table.spec tr:last-child td { border-bottom: none; }
+table.spec td.k { color: var(--gold-bright); width: 11rem; white-space: nowrap; padding-right: 1rem; }
+table.spec td.v { color: var(--cream); }
+table.spec td.v span { color: var(--dim); }
+.links { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+.btn { font: 0.78rem "JetBrains Mono", monospace; display: inline-block; padding: 0.45rem 0.95rem; border-radius: 3px; text-decoration: none; letter-spacing: 0.3px; border: 1px solid rgba(212, 175, 87, 0.38); color: var(--gold-bright); background: rgba(212, 175, 87, 0.06); transition: all 0.18s ease; }
+.btn:hover { border-color: var(--gold); background: rgba(212, 175, 87, 0.14); }
+.btn.primary { background: var(--gold); border-color: var(--gold); color: #17140a; font-weight: 700; }
+.btn.primary:hover { background: var(--gold-bright); border-color: var(--gold-bright); }
+footer { margin-top: 2.75rem; padding-top: 1.1rem; border-top: 1px solid rgba(212, 175, 87, 0.18); color: var(--dim); font-size: 0.74rem; line-height: 1.6; }
+@media (max-width: 600px) {
+  .hero { justify-content: center; }
+  .hero-portrait img { width: min(246px, 78vw); }
+  .hero-portrait::after { right: -8px; }
+  .prompt { font-size: 0.78rem; }
+  table.spec td.k { width: auto; display: block; padding-bottom: 0; border: none; }
+  table.spec td.v { display: block; padding-top: 0.15rem; }
+}
+</style>
+</head>
+<body>
+<div class="math-strip" aria-hidden="true">
+  <span>V(λ)</span><span>∩</span><span>H₁ ∪ H₂ ∪ H₃</span><span>≅</span><span>K₀(X)</span><span>Σ</span><span>π₁(M)</span><span>⇒</span><span>Ax = b</span>
+</div>
+<nav class="navbar">
+  <span class="course"><span class="spark">✦</span>MA491 &middot; AY71-1</span>
+  <span class="nav-spacer"></span>
+  <a class="nav-link" href="../">cd ../people</a>
+</nav>
+<main class="wrap">
+  <p class="prompt"><span class="u">joe</span>@<span class="h">ma491</span>:<span class="p">~</span>$ <span class="c">whoami</span></p>
+  <div class="hero">
+    <div class="hero-portrait">
+      <img src="../doc-joe-d-assets/joseph-dorta-cartoon.png" alt="Cartoon portrait of Joseph Dorta with mathematical symbols">
+    </div>
+    <div class="hero-body">
+      <p class="rank">Doc-Joe-D &middot; Mathemagician</p>
+      <h1>Joseph Dorta</h1>
+      <p class="role">Assistant Professor, Department of Mathematical Sciences</p>
+      <p class="role">United States Military Academy, West Point</p>
+    </div>
+  </div>
+
+  <p class="prompt"><span class="u">joe</span>@<span class="h">ma491</span>:<span class="p">~</span>$ <span class="c">cat about.md</span></p>
+  <div class="out">
+    <p>I am a mathematician and teacher drawn to the places where abstract structure meets useful reasoning. My work ranges from geometric representation theory, hyperplane arrangements, and algebraic geometry to data science, mathematical modeling, and algebraic reasoning in the classroom. Away from the chalkboard, I am also interested in Russian literature and military science and technology.</p>
+  </div>
+
+  <p class="prompt"><span class="u">joe</span>@<span class="h">ma491</span>:<span class="p">~</span>$ <span class="c">cat /proc/dorta</span></p>
+  <table class="spec">
+    <tr><td class="k">education</td><td class="v">PhD Mathematics, Louisiana State University <span>&mdash; advised by Pramod Achar</span></td></tr>
+    <tr><td class="k"></td><td class="v">BS and MS Mathematics, University of Georgia</td></tr>
+    <tr><td class="k">research</td><td class="v">Geometric representation theory, hyperplane arrangements, algebraic geometry, algebraic K-theory</td></tr>
+    <tr><td class="k">applied</td><td class="v">Data science, mathematical modeling, military science and technology</td></tr>
+    <tr><td class="k">teaching</td><td class="v">Algebraic reasoning, calculus, precalculus, geometry, and problem solving</td></tr>
+    <tr><td class="k">office</td><td class="v">220 Thayer Hall</td></tr>
+  </table>
+
+  <p class="prompt"><span class="u">joe</span>@<span class="h">ma491</span>:<span class="p">~</span>$ <span class="c">ls links/</span></p>
+  <div class="links">
+    <a class="btn primary" href="https://josephdorta.wordpress.com/">josephdorta.wordpress.com</a>
+    <a class="btn" href="mailto:joseph.dorta@westpoint.edu">email</a>
+  </div>
+
+  <p class="prompt"><span class="u">joe</span>@<span class="h">ma491</span>:<span class="p">~</span>$ <span class="cursor"></span></p>
+  <footer>
+    The views expressed here are those of the author and do not reflect the official policy or position of the United States Army, Department of Defense, the United States Military Academy at West Point, or the U.S. Government.
+  </footer>
+</main>
+</body>
+</html>
