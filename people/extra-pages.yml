@@ -1,5 +1,10 @@
 # Hand-built pages that live in the site as-is instead of as .qmd.
 # Add an entry here when someone brings their own fully designed HTML page.
+- title: "Andrew Tran"
+  subtitle: "Cadet, Class of 2027"
+  description: "Custom page — mission telemetry, cyber avionics, and ultrarunning propulsion."
+  path: andrew-tran/index.html
+
 - title: "Austin Semmel"
   subtitle: "Instructor"
   description: "Custom page — teaching, research, and a workbench."

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDT Andrew Tran | Telemetry & Mission Log — MA491</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-bg: #03030c;
+            --space-card: rgba(12, 19, 35, 0.72);
+            --space-card-border: rgba(56, 189, 248, 0.22);
+            --cyan-glow: #38bdf8;
+            --cyan-dim: #0284c7;
+            --violet-glow: #a855f7;
+            --rose-glow: #f43f5e;
+            --emerald-glow: #10b981;
+            --amber-glow: #f59e0b;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+            --hud-grid: rgba(56, 189, 248, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--space-bg);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            background-image:
+                linear-gradient(var(--hud-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--hud-grid) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* --- Starfield Background Effect --- */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(1.5px 1.5px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 60px 85px, var(--cyan-glow), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 120px 45px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 180px 140px, var(--violet-glow), rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 220px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 280px 190px, var(--emerald-glow), rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 320px 320px;
+            opacity: 0.65;
+            z-index: -2;
+            animation: starDrift 60s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes starDrift {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-320px); }
+        }
+
+        /* Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 0, 0, 0.28) 50%, rgba(0, 0, 0, 0.28));
+            background-size: 100% 4px;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* --- Top Navigation Bar --- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 10px 24px;
+            background: rgba(3, 3, 12, 0.88);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            color: var(--cyan-glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .beacon-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--emerald-glow);
+            box-shadow: 0 0 10px var(--emerald-glow);
+            animation: pulseBeacon 2.2s infinite ease-in-out;
+        }
+
+        @keyframes pulseBeacon {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.8); }
+        }
+
+        .nav-telemetry {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .telemetry-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan-glow);
+            font-size: 0.8rem;
+            text-decoration: none;
+            padding: 4px 10px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 4px;
+            background: rgba(56, 189, 248, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(56, 189, 248, 0.18);
+            border-color: var(--cyan-glow);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+            color: #ffffff;
+        }
+
+        /* --- Main Layout Wrapper --- */
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            background: var(--space-card);
+            border: 1px solid var(--space-card-border);
+            border-radius: 12px;
+            padding: 2.2rem;
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.12), inset 0 0 20px rgba(56, 189, 248, 0.03);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2.5rem;
+        }
+
+        /* HUD Corner Marks */
+        .hero::before, .hero::after, .card::before, .card::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            pointer-events: none;
+        }
+
+        .hero::before, .card::before {
+            top: 6px;
+            left: 6px;
+            border-top: 2px solid var(--cyan-glow);
+            border-left: 2px solid var(--cyan-glow);
+        }
+
+        .hero::after, .card::after {
+            bottom: 6px;
+            right: 6px;
+            border-bottom: 2px solid var(--violet-glow);
+            border-right: 2px solid var(--violet-glow);
+        }
+
+        .hero-portrait-frame {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .hero-portrait {
+            display: block;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid rgba(56, 189, 248, 0.6);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.35), 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-overlay-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(3, 3, 12, 0.85);
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 3px;
+            letter-spacing: 1px;
+        }
+
+        .hero-body {
+            flex: 1 1 340px;
+        }
+
+        .rank-callsign {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--amber-glow);
+            font-size: 0.82rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-body h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 2px;
+            line-height: 1.15;
+            margin-bottom: 0.4rem;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+
+        .hero-subtitle {
+            color: var(--violet-glow);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.92rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-bio {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-cyan {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--cyan-glow);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+
+        .badge-violet {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--violet-glow);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+        }
+
+        .badge-emerald {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--emerald-glow);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        /* --- Cards Grid Layout --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: var(--space-card);
+            border: 1px solid var(--space-card-border);
+            border-radius: 10px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            position: relative;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--cyan-glow);
+            box-shadow: 0 8px 30px rgba(56, 189, 248, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.7);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.05rem;
+            color: var(--rose-glow);
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .telemetry-list {
+            list-style: none;
+        }
+
+        .telemetry-list li {
+            margin-bottom: 0.95rem;
+            line-height: 1.55;
+            font-size: 0.92rem;
+            position: relative;
+            padding-left: 1.4rem;
+        }
+
+        .telemetry-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--cyan-glow);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .highlight-label {
+            color: var(--cyan-glow);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.86rem;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .pill-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: #cbd5e1;
+            padding: 1px 7px;
+            border-radius: 4px;
+            margin: 2px 2px;
+        }
+
+        /* --- Interactive Widgets Section --- */
+        .widget-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .hud-panel {
+            background: rgba(8, 14, 28, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 10px;
+            padding: 1.6rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .hud-panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            color: var(--cyan-glow);
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Progress Bar for Ultra Marathon */
+        .progress-hud {
+            margin-top: 0.8rem;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .progress-track {
+            height: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 82%;
+            background: linear-gradient(90deg, var(--cyan-dim), var(--emerald-glow));
+            box-shadow: 0 0 12px var(--emerald-glow);
+            position: relative;
+            transition: width 1s ease-in-out;
+        }
+
+        /* Interactive Golf Next Best Shot EV Matrix */
+        .interactive-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .interactive-btn {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .interactive-btn:hover, .interactive-btn.active {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--cyan-glow);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .sim-output-box {
+            background: #020617;
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            border-radius: 6px;
+            padding: 1.2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            line-height: 1.6;
+        }
+
+        .sim-metric {
+            color: var(--emerald-glow);
+            font-weight: 700;
+        }
+
+        .sim-warn {
+            color: var(--amber-glow);
+        }
+
+        /* --- Telemetry Terminal --- */
+        .terminal-box {
+            background: #02040a;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+
+        .terminal-bar {
+            background: #0a0f1d;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .t-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .t-red { background: #ef4444; }
+        .t-yellow { background: #f59e0b; }
+        .t-green { background: #10b981; }
+
+        .terminal-title {
+            color: var(--text-dim);
+            font-size: 0.74rem;
+            margin-left: 6px;
+            letter-spacing: 1px;
+        }
+
+        .terminal-content {
+            padding: 1.2rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .t-cyan { color: var(--cyan-glow); }
+        .t-violet { color: var(--violet-glow); }
+        .t-green { color: var(--emerald-glow); }
+        .t-amber { color: var(--amber-glow); }
+        .t-dim { color: var(--text-muted); }
+
+        .cursor {
+            display: inline-block;
+            width: 7px;
+            height: 14px;
+            background: var(--cyan-glow);
+            vertical-align: -2px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- Mission Comms / Contact Table --- */
+        .comms-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .comms-table td {
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+            vertical-align: top;
+        }
+
+        .comms-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comms-table td.k {
+            color: var(--cyan-glow);
+            width: 12rem;
+            white-space: nowrap;
+            padding-right: 1rem;
+            font-weight: 600;
+        }
+
+        .comms-table td.v a {
+            color: var(--emerald-glow);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .comms-table td.v a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px dashed rgba(56, 189, 248, 0.2);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .footer-status {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--emerald-glow);
+            font-size: 0.82rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+        }
+
+        .disclaimer {
+            max-width: 780px;
+            margin: 0 auto;
+            font-size: 0.74rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .hero-body h1 {
+                font-size: 1.85rem;
+            }
+            .rank-callsign {
+                justify-content: center;
+            }
+            .badge-row {
+                justify-content: center;
+            }
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            .comms-table td.k {
+                display: block;
+                width: auto;
+                padding-bottom: 0;
+            }
+            .comms-table td.v {
+                display: block;
+                padding-top: 0.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+    <div class="scanlines"></div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <a href="../../" class="nav-brand">
+            <span class="beacon-dot"></span>
+            <span>MA491 &middot; AY27-1</span>
+        </a>
+        <div class="nav-telemetry">
+            <div class="telemetry-item mono">
+                <span style="color: var(--emerald-glow);">● SYS:</span>
+                <span>ONLINE</span>
+            </div>
+            <div class="telemetry-item mono">
+                <span style="color: var(--cyan-glow);">UTC/ZULU:</span>
+                <span id="zulu-clock">--:--:-- Z</span>
+            </div>
+            <a href="../" class="nav-link">cd ../people</a>
+        </div>
+    </nav>
+
+    <div class="wrap">
+
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-portrait-frame">
+                <img src="hero.jpg" alt="Illustrated superhero portrait of CDT Andrew Tran with cybernetic telemetry armor and glasses" class="hero-portrait">
+                <div class="hero-overlay-tag">CALLSIGN: TRAN // USMA '27</div>
+            </div>
+            <div class="hero-body">
+                <div class="rank-callsign">
+                    <span>CADET, CLASS OF 2027</span>
+                    <span>&bull;</span>
+                    <span>USMA WEST POINT</span>
+                </div>
+                <h1>CDT ANDREW TRAN</h1>
+                <div class="hero-subtitle">// PERSONNEL TELEMETRY & MISSION LOG</div>
+                <p class="hero-bio">
+                    Cadet at the United States Military Academy specializing in Mathematical Sciences, Cyber Operations, Applied Machine Learning, and Ultra-Endurance Propulsion. Focused on high-stakes modeling from network intrusion analytics to golf ballistics and 100-mile ultra-marathon execution.
+                </p>
+                <div class="badge-row">
+                    <span class="badge badge-cyan">⚡ Combat Readiness: 100%</span>
+                    <span class="badge badge-violet">🏃 100-Mile Ultra Trajectory</span>
+                    <span class="badge badge-emerald">🤖 Applied AI / Cyber</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Four Primary Telemetry Sectors -->
+        <div class="grid-container">
+
+            <!-- Sector 01: Crew Identity -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">[01] CREW IDENTITY</h2>
+                    <span class="card-tag">STATUS: ACTIVE</span>
+                </div>
+                <ul class="telemetry-list">
+                    <li>
+                        <span class="highlight-label">Designation:</span>
+                        21-Year-Old College Student &amp; Military Cadet (USMA '27)
+                    </li>
+                    <li>
+                        <span class="highlight-label">Historical Station:</span>
+                        Fu Jen Catholic University (Taiwan) &mdash; Language &amp; Regional Operations
+                    </li>
+                    <li>
+                        <span class="highlight-label">Current Operations:</span>
+                        Academic &amp; Leadership Curriculum. Fall 2026 Core Focus:
+                        <div style="margin-top: 6px;">
+                            <span class="pill-tag">PH275</span>
+                            <span class="pill-tag">SS367</span>
+                            <span class="pill-tag">MA478</span>
+                            <span class="pill-tag">CS393</span>
+                            <span class="pill-tag">AI380</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sector 02: Endurance Propulsion -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">[02] ENDURANCE PROPULSION</h2>
+                    <span class="card-tag">ENGINE: NOMINAL</span>
+                </div>
+                <ul class="telemetry-list">
+                    <li>
+                        <span class="highlight-label">Primary Engine:</span>
+                        Long-distance Running, Trail Ultrarunning &amp; Aerobic Conditioning
+                    </li>
+                    <li>
+                        <span class="highlight-label">Payload Training:</span>
+                        Weighted pack rucking (45-lb tactical configuration)
+                    </li>
+                    <li>
+                        <span class="highlight-label">Mission Target:</span>
+                        <strong>Midwest States 100-Mile Ultra-Marathon</strong> &mdash; Peak preparation phase
+                    </li>
+                    <li>
+                        <span class="highlight-label">Ground Gear:</span>
+                        Saucony Guide 17 stability platform
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sector 03: Digital Avionics & ML -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">[03] DIGITAL AVIONICS</h2>
+                    <span class="card-tag">STACK: ONLINE</span>
+                </div>
+                <ul class="telemetry-list">
+                    <li>
+                        <span class="highlight-label">Data Science Stack:</span>
+                        <div style="margin-top: 4px;">
+                            <span class="pill-tag">Python</span>
+                            <span class="pill-tag">Pandas</span>
+                            <span class="pill-tag">NumPy</span>
+                            <span class="pill-tag">Scikit-Learn</span>
+                            <span class="pill-tag">TensorFlow</span>
+                            <span class="pill-tag">Keras</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="highlight-label">Embedded Hardware:</span>
+                        CircuitPython, Adafruit Circuit Playground, TFT Gizmo, BLE Telemetry
+                    </li>
+                    <li>
+                        <span class="highlight-label">Tactical Analytics:</span>
+                        Network packet inspection (<code class="mono" style="color: var(--cyan-glow);">.pcapng</code> parsing), K-means clustering, and CNN deep learning on CIFAKE dataset
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sector 04: Strategic Sectors -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">[04] STRATEGIC SECTORS</h2>
+                    <span class="card-tag">INTEL: LOGGED</span>
+                </div>
+                <ul class="telemetry-list">
+                    <li>
+                        <span class="highlight-label">Ballistics &amp; Analytics:</span>
+                        Golf shot trajectory optimization, Strokes Gained metrics, and logistic regression decision models (<em>"Next Best Shot"</em>)
+                    </li>
+                    <li>
+                        <span class="highlight-label">Territorial Assets:</span>
+                        Midwest real estate market &amp; demographic investment analysis (Cincinnati &amp; Dayton corridors)
+                    </li>
+                    <li>
+                        <span class="highlight-label">Linguistic Modules:</span>
+                        Chinese language studies, lexical acquisition systems, and classical/modern prose analysis
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Interactive Mission HUD Widgets -->
+        <div class="widget-section">
+
+            <!-- Ultra-Marathon Mission Readiness Gauge -->
+            <div class="hud-panel">
+                <div class="hud-panel-title">
+                    <span>🏁 MISSION TARGET: MIDWEST STATES 100-MILE ULTRA</span>
+                    <span class="mono" style="font-size: 0.75rem; color: var(--emerald-glow);">TRAINING READINESS: 82%</span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 0.8rem;">
+                    Targeting 100 miles of continuous trail endurance under high biomechanical efficiency. Current focus combines back-to-back long runs, metabolic glycogen conservation, and 45-lb ruck loading.
+                </p>
+                <div class="progress-hud">
+                    <div class="progress-meta">
+                        <span>PHASE 1: BASE MILEAGE (COMPLETED)</span>
+                        <span>PHASE 2: 45LB RUCK LOAD (ACTIVE)</span>
+                        <span>PHASE 3: RACE TAPER (QUEUED)</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="ultra-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Ballistics & Golf EV Simulator -->
+            <div class="hud-panel">
+                <div class="hud-panel-title">
+                    <span>⛳ TACTICAL BALLISTICS: "NEXT BEST SHOT" EXPECTED VALUE SIMULATOR</span>
+                    <span class="mono" style="font-size: 0.75rem; color: var(--amber-glow);">MODEL: LOGIT/STROKES-GAINED</span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 0.85rem;">
+                    Select an operational scenario to evaluate logistic model shot-choice expected value (EV) and risk surface:
+                </p>
+                <div class="interactive-controls">
+                    <button class="interactive-btn active" onclick="updateScenario('drive')">Scenario A: Tight Fairway (285y Driver vs 3-Wood)</button>
+                    <button class="interactive-btn" onclick="updateScenario('approach')">Scenario B: 175y Pin Over Water Hazard</button>
+                    <button class="interactive-btn" onclick="updateScenario('recovery')">Scenario C: Pine Straw Punch vs Aggressive Window</button>
+                </div>
+                <div class="sim-output-box" id="sim-output">
+                    <span class="t-cyan">[SIMULATION READY]</span> Scenario A Selected: <strong>Tight Fairway (Par 4, 430y)</strong><br>
+                    &bull; Option 1 (Aggressive Driver): Mean Dispersion &plusmn;22y | P(Fairway) = 54% | EV: <span class="sim-metric">4.12 Strokes</span><br>
+                    &bull; Option 2 (Tactical 3-Wood): Mean Dispersion &plusmn;11y | P(Fairway) = 78% | EV: <span class="sim-metric">3.94 Strokes (Optimal)</span><br>
+                    <span class="sim-warn">&gt; LOGISTIC RECOMMENDATION: Execute 3-Wood. Strokes Gained delta = +0.18 over aggressive driver line.</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Terminal Output Box -->
+        <div class="terminal-box">
+            <div class="terminal-bar">
+                <span class="t-dot t-red"></span>
+                <span class="t-dot t-yellow"></span>
+                <span class="t-dot t-green"></span>
+                <span class="terminal-title">atran@mission-control:~ (zsh)</span>
+            </div>
+            <div class="terminal-content">
+                <p><span class="t-cyan">atran@mission-control</span>:<span class="t-violet">~</span>$ cat mission_parameters.json</p>
+                <p class="t-dim">{</p>
+                <p style="padding-left: 1.5rem;">"cadet": <span class="t-green">"Andrew Tran"</span>,</p>
+                <p style="padding-left: 1.5rem;">"class": <span class="t-green">"USMA 2027"</span>,</p>
+                <p style="padding-left: 1.5rem;">"hometown_station": <span class="t-green">"West Point, NY / Fu Jen Catholic Univ"</span>,</p>
+                <p style="padding-left: 1.5rem;">"primary_directive": <span class="t-green">"Master mathematical rigor, data systems, and tactical leadership"</span>,</p>
+                <p style="padding-left: 1.5rem;">"system_status": <span class="t-green">"ALL TELEMETRY NOMINAL"</span></p>
+                <p class="t-dim">}</p>
+                <p><span class="t-cyan">atran@mission-control</span>:<span class="t-violet">~</span>$ <span class="cursor"></span></p>
+            </div>
+        </div>
+
+        <!-- Comms Spec Table -->
+        <div class="hud-panel">
+            <div class="hud-panel-title">
+                <span>📡 COMMUNICATIONS &amp; TELEMETRY CHANNELS</span>
+                <span class="mono" style="font-size: 0.75rem; color: var(--emerald-glow);">ENCRYPTION: ACTIVE</span>
+            </div>
+            <table class="comms-table">
+                <tr>
+                    <td class="k">Institutional Comms</td>
+                    <td class="v"><a href="mailto:andrew.tran@westpoint.edu">andrew.tran@westpoint.edu</a></td>
+                </tr>
+                <tr>
+                    <td class="k">Academic Department</td>
+                    <td class="v">Department of Mathematical Sciences &bull; United States Military Academy</td>
+                </tr>
+                <tr>
+                    <td class="k">Course GitHub Link</td>
+                    <td class="v"><a href="https://github.com/dusty-turner/MA491-AY71-1" target="_blank" rel="noopener">dusty-turner/MA491-AY71-1</a></td>
+                </tr>
+                <tr>
+                    <td class="k">Key Focus Areas</td>
+                    <td class="v">Applied Machine Learning, Network Packet Analysis, Ultrarunning, Quantitative Sports Analytics</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-status">[STATUS: SYSTEM ONLINE] // ALL FLIGHT PARAMETERS NOMINAL</div>
+            <div class="disclaimer">
+                The views expressed here are those of the author and do not reflect the official policy or position of the United States Army, Department of Defense, the United States Military Academy at West Point, or the U.S. Government.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Live Telemetry Clock & Widget Script -->
+    <script>
+        function updateZuluClock() {
+            const now = new Date();
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            const clockEl = document.getElementById('zulu-clock');
+            if (clockEl) {
+                clockEl.textContent = `${hours}:${minutes}:${seconds} Z`;
+            }
+        }
+        setInterval(updateZuluClock, 1000);
+        updateZuluClock();
+
+        const scenarios = {
+            drive: {
+                title: "Tight Fairway (Par 4, 430y)",
+                opt1: "Option 1 (Aggressive Driver): Mean Dispersion ±22y | P(Fairway) = 54% | EV: 4.12 Strokes",
+                opt2: "Option 2 (Tactical 3-Wood): Mean Dispersion ±11y | P(Fairway) = 78% | EV: 3.94 Strokes (Optimal)",
+                rec: "> LOGISTIC RECOMMENDATION: Execute 3-Wood. Strokes Gained delta = +0.18 over aggressive driver line."
+            },
+            approach: {
+                title: "175y Pin Tucked Left Over Water Hazard",
+                opt1: "Option 1 (Pin Hunting 7-Iron): P(Water Penalty) = 28% | P(Green in Reg) = 46% | EV: 3.42 Strokes",
+                opt2: "Option 2 (Center Green Target 7-Iron): P(Water Penalty) = 4% | P(Green in Reg) = 74% | EV: 3.08 Strokes (Optimal)",
+                rec: "> LOGISTIC RECOMMENDATION: Fire at center of green. Avoid penalty hazard; 2-putt safety profile minimizes variance."
+            },
+            recovery: {
+                title: "Deep Pine Straw with Tree Canopy Window",
+                opt1: "Option 1 (Hero Hook around Trunk): P(Clean Escape) = 31% | P(Branch Deflection) = 69% | EV: 4.65 Strokes",
+                opt2: "Option 2 (Low Punch Out to 80y Fairway): P(Clean Escape) = 96% | P(Fairway Wedge) = 92% | EV: 4.15 Strokes (Optimal)",
+                rec: "> LOGISTIC RECOMMENDATION: Take tactical punch out. Save the stroke and rely on 80y wedge proximity."
+            }
+        };
+
+        function updateScenario(key) {
+            const btns = document.querySelectorAll('.interactive-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const sc = scenarios[key];
+            const output = document.getElementById('sim-output');
+            output.innerHTML = `
+                <span class="t-cyan">[SIMULATION UPDATED]</span> ${sc.title}<br>
+                &bull; ${sc.opt1}<br>
+                &bull; ${sc.opt2}<br>
+                <span class="sim-warn">${sc.rec}</span>
+            `;
+        }
+    </script>
+</body>
+</html>

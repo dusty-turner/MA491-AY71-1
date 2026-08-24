@@ -10,6 +10,7 @@ project:
 
   # Hand-built HTML pages, copied through untouched. See people/extra-pages.yml.
   resources:
+    - "people/andrew-tran/**"
     - "people/austin-semmel/**"
     - "people/doc-joe-d/**"
     - "people/doc-joe-d-assets/**"
